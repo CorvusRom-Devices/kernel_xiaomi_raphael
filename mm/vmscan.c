@@ -1682,7 +1682,7 @@ int isolate_lru_page(struct page *page)
 	int ret = -EBUSY;
 
 	VM_BUG_ON_PAGE(!page_count(page), page);
-	WARN_RATELIMIT(PageTail(page), "trying to isolate tail page");
+	/* WARN_RATELIMIT(PageTail(page), "trying to isolate tail page"); */
 
 	if (PageLRU(page)) {
 		struct zone *zone = page_zone(page);
@@ -2947,7 +2947,7 @@ retry:
 
 	do {
 		vmpressure_prio(sc->gfp_mask, sc->target_mem_cgroup,
-				sc->priority);
+				sc->priority, sc->order);
 		sc->nr_scanned = 0;
 		shrink_zones(zonelist, sc);
 
