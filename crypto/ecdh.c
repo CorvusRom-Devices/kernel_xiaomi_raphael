@@ -30,8 +30,8 @@ static inline struct ecdh_ctx *ecdh_get_ctx(struct crypto_kpp *tfm)
 static unsigned int ecdh_supported_curve(unsigned int curve_id)
 {
 	switch (curve_id) {
-	case ECC_CURVE_NIST_P192: return 3;
-	case ECC_CURVE_NIST_P256: return 4;
+	case ECC_CURVE_NIST_P192: return ECC_CURVE_NIST_P192_DIGITS;
+	case ECC_CURVE_NIST_P256: return ECC_CURVE_NIST_P256_DIGITS;
 	default: return 0;
 	}
 }
@@ -163,7 +163,7 @@ static void ecdh_exit(void)
 	crypto_unregister_kpp(&ecdh);
 }
 
-module_init(ecdh_init);
+subsys_initcall(ecdh_init);
 module_exit(ecdh_exit);
 MODULE_ALIAS_CRYPTO("ecdh");
 MODULE_LICENSE("GPL");
